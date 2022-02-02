@@ -1,0 +1,75 @@
+.bg {
+    background: linear-gradient(rgba(255, 255, 255, 0.7),
+        /*To set background image*/
+    rgba(255, 255, 255, 0.6)),
+    url(https://t4.ftcdn.net/jpg/03/01/54/25/360_F_301542576_CJsgd6hBdw4bfGzWjsh39Tbc3jgnhyij.jpg) 50% 50% fixed;
+    background-size: cover;
+    color: black;
+}
+
+.foot {
+    background: #000000;
+    text-align: center;
+}
+
+input:hover {
+    border-color: red;
+    /*Some effects to our input tag*/
+}
+
+.search {
+    border-width: 2px 4px;
+    border-radius: 40px;
+    /* Search button border*/
+}
+
+.border {
+    border-style: solid;
+    border-color: black;
+    /* To set border to contents*/
+    padding: 20px;
+
+}
+
+#content {
+    margin-left: auto;
+    /* To setting margin to our border contents*/
+    margin-right: auto;
+    width: 60%;
+}
+
+#submit {
+    padding: 10px;
+    color: white;
+    /* Submit button attributes*/
+    background-color: rgb(216, 38, 38);
+    box-shadow: 8px 4px 4px rgb(100, 37, 37);
+}
+
+header {
+    background: #d42a2a;
+    background-position: center;
+    /*For header which contains image */
+    color: #fbfbfa;
+    padding: 10px;
+    margin-top: -27px;
+}
+
+.checkbox-grid li {
+    display: block;
+    float: left;
+    width: 25%;
+}
+
+table.resultsTable{
+    border-collapse:collapse;
+    border:1px solid #8B0000;
+}
+
+table tr{
+    border:1px solid #8B0000;
+}
+
+td{
+    padding: 5px 15px;
+}

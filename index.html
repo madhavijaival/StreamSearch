@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Stream Search</title>
+  <link rel="icon" href="StreamSearchIcon.jpg">
+  <script type="text/javascript" src="main.js"></script>
+  <link rel="stylesheet" href="styleSheet.css">
+</head>
+
+<body onload="onLoad()" class="bg" style="margin:0;">
+  <br>
+  <header>
+    <center>
+      <img src="StreamSearchLogo(1).png" alt="" style=" height:120px; ">
+    </center>
+    <section style="margin-left: 70%">
+      <label for="accessKeyTextbox">Access Key: </label>
+      <input type="text" id="accessKeyTextbox" name="accessKeyTextbox" class="hover">
+    </section>
+  </header>
+
+
+  <section style="margin-left:20%">
+    <h2>Search By Title</h2>
+    <label for="searchTextbox">Title: </label>
+    <input type="text" id="searchTextbox" name="searchTextbox" class="search,hover">
+    <button type="button" id="searchButton" name="searchButton" onclick="checkAccessKey('title')"
+            class="hover">Search Title</button>
+  </section><br>
+
+  <form id="submitSearchForm" name="submitSearchForm" onSubmit="checkAccessKey('criteria')">
+  <div id="content">
+    <section>
+      <h2>Search By Criteria</h2>
+      <h3>Choose Streaming Service(s)</h3>
+      <div class="border" style="width: 100%;">
+        <ul class="checkbox-grid" id="streamingCheckboxList">
+          <li>
+            <input type="checkbox" id="allServicesCheckbox" onchange="selectOrDeselectAllServices()">
+            <label for="allServicesCheckbox">All Services</label>
+          </li>
+        </ul>
+        <label style="color: lightslategray">.</label>
+      </div>
+    </section><br>
+
+  <section>
+    <h3>Choose Rating Website</h3>
+    <div class="border" style="width: 100%;">
+      <table>
+        <tr>
+          <th>Rating Website</th>
+          <th></th>
+          <!--
+            <th>Rating Weight</th>
+          -->
+          <th>Minimum Rating</th>
+          <th>Maximum Rating</th>
+        </tr>
+        <tr>
+          <td>
+            IMDb
+          </td>
+          <td>
+            <label for="imdbCheckbox"></label>
+            <input type="checkbox" id="imdbCheckbox" name="imdbCheckbox" onclick="ratingWebsiteChecked('imdb')" checked="checked">
+          </td>
+          <!--
+          <td>
+            <input type="range" min="1" max="100" value="100" id="imdbRange" name="imdbRange" oninput="document.getElementById('imdbRangeLabel').innerHTML=this.value" class="hover">
+            <label for="imdbRange" id="imdbRangeLabel" >100</label>
+          </td>
+          -->
+          <td>
+            <input type="range" min="1.0" max="10.0" value="10.0" step=0.1 id="imdbMinRange" name="imdbMinRange" oninput="document.getElementById('imdbMinRangeLabel').innerHTML=this.value">
+            <label for="imdbMinRange" id="imdbMinRangeLabel">10</label>
+          </td>
+          <td>
+            <input type="range" min="1.0" max="10.0" value="10.0" step=0.1 id="imdbMaxRange"
+                   name="imdbMaxRange"
+                   oninput="document.getElementById('imdbMaxRangeLabel').innerHTML=this.value">
+            <label for="imdbMaxRange" id="imdbMaxRangeLabel">10</label>
+          </td>
+        </tr>
+
+        <tr>
+        <td>
+            Rotten Tomatoes
+        </td>
+        <td>
+            <label for="rtCheckbox"></label>
+            <input type="checkbox" id="rtCheckbox" name="rtCheckbox" onclick="ratingWebsiteChecked('rt')" checked="checked">
+        </td>
+        <!--
+          <td>
+            <input type="range" min="1" max="100" value="100" id="rtRange" name="rtRange" oninput="document.getElementById('rtRangeLabel').innerHTML=this.value">
+            <label for="rtRange" id="rtRangeLabel">100</label>
+        </td>
+        -->
+        <td>
+            <input type="range" min="1" max="100" value="100" step=1 id="rtMinRange" name="rtMinRange" oninput="document.getElementById('rtMinRangeLabel').innerHTML=this.value">
+            <label for="rtMinRange" id="rtMinRangeLabel">100</label>
+        </td>
+        <td>
+            <input type="range" min="1" max="100" value="100" step=1 id="rtMaxRange" name="rtMaxRange" oninput="document.getElementById('rtMaxRangeLabel').innerHTML=this.value">
+            <label for="rtMaxRange" id="rtMaxRangeLabel">100</label>
+        </td>
+        </tr>
+        <tr>
+        <td>
+            Meta Critic
+        </td>
+        <td>
+            <label for="mcCheckbox"></label>
+            <input type="checkbox" id="mcCheckbox" name="mcCheckbox" onclick="ratingWebsiteChecked('mc')" checked="checked">
+        </td>
+          <!--
+        <td>
+            <input type="range" min="1" max="100" value="100" id="mcRange" name="mcRange" oninput="document.getElementById('mcRangeLabel').innerHTML=this.value">
+            <label for="mcRange" id="mcRangeLabel">100</label>
+        </td>
+        -->
+        <td>
+            <input type="range" min="1" max="100" value="100" step=1 id="mcMinRange" name="mcMinRange" oninput="document.getElementById('mcMinRangeLabel').innerHTML=this.value">
+            <label for="mcMinRange" id="mcMinRangeLabel">100</label>
+        </td>
+        <td>
+            <input type="range" min="1" max="100" value="100" step=1 id="mcMaxRange" name="mcMaxRange" oninput="document.getElementById('mcMaxRangeLabel').innerHTML=this.value">
+            <label for="mcMaxRange" id="mcMaxRangeLabel">100</label>
+        </td>
+        </tr>
+
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h3>Required Parameters</h3>
+      <div class="border" style="width: 100%;">
+        <label for="countrySelect">Country</label>
+        <select id="countrySelect" name="countrySelect" onchange="changeServices(JSON.parse(this.value)[1])">
+        </select>
+
+        <label for="typeSelect">Type</label>
+        <select id="typeSelect" name="typeSelect">
+          <option value="movie">Movie</option>
+          <option value="series">Series</option>
+        </select><br>
+
+        <label for="orderBySelect">Order By</label>
+        <select id="orderBySelect" name="orderBySelect">
+          <option value="imdb_rating">IMDb Rating</option>
+          <option value="original_title">Title</option>
+          <option value="year">Year</option>
+        </select>
+      </div>
+    </section>
+
+    <section>
+    <h3>Optional Parameters</h3>
+      <div class="border" style="width: 100%;">
+        <label for="genreSelect">Genre</label>
+        <select id="genreSelect" name="genreSelect" multiple></select>
+
+        <label for="genreAndRadio">and</label>
+        <input id="genreAndRadio" type="radio" name="genreAndOrRadio" value="and">
+        <label for="genreOrRadio">or</label>
+        <input id="genreOrRadio" type="radio"  name="genreAndOrRadio" value="or">
+        <br>
+        <label for="startYearSelect">Start Year</label>
+        <select id="startYearSelect" name="startYearSelect"></select>
+        <label for="endYearSelect">End Year</label>
+        <select id="endYearSelect" name="endYearSelect"></select><br>
+
+        <label for="audioSelect">Audio</label>
+        <select id="audioSelect" name="audioSelect"></select>
+      </div>
+  </section>
+  </div><br>
+
+  <div style="margin-left: 75%; padding: 20px; ">
+    <input type="submit" value="Search" class="hover" id="submit">
+  </div>
+  </form>
+
+<!--
+TODO: Perform form checking on end End year is after start year
+-->
+
+
+<!--
+<script>
+
+
+    if (document.getElementById("netflixCheckbox").checked === true) {
+        const slider = document.createElement("input")
+        slider.setAttribute("type", "range");
+        slider.setAttribute("min", "1");
+        slider.setAttribute("max", "100");
+        slider.setAttribute("value", "100");
+        slider.setAttribute("id", "netflixRange");
+        document.getElementById("body").appendChild(slider);
+    }
+
+        function netflixChecked() {
+            const slider = document.createElement("input")
+            slider.setAttribute("type", "range");
+            slider.setAttribute("min", "1");
+            slider.setAttribute("max", "100");
+            slider.setAttribute("value", "100");
+            slider.setAttribute("id", "netflixRange");
+            document.getElementById("body").appendChild(slider);
+        }
+</form>
+
+-->
+
+
+  <footer>
+      <center>For Educational Purposes ONLY!</center>
+  </footer>
+
+</body>
+
+</html>
+
